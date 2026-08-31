@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 export default function FutureClass() {
   const [selectedYear, setSelectedYear] = useState(2026);
   const [notices, setNotices] = useState([
-    { id: 1, text: "미래공학 학급 Next.js 홈페이지가 성공적으로 개설되었습니다!" }
+    { id: 1, text: "미래공학 학급 공식 Next.js 누리집이 개설되었습니다." }
   ]);
   const [dailyPosts, setDailyPosts] = useState<{ name: string; text: string }[]>([]);
   const [userName, setUserName] = useState("");
@@ -27,7 +27,7 @@ export default function FutureClass() {
           ⚡ FUTURE ENGINEERING CLASS ⚡
         </h1>
         <div style={{ fontSize: '0.85rem', color: '#0891b2', letterSpacing: '2px' }}>
-          SYSTEM STATUS: ONLINE (NEXT.JS 14)
+          SYSTEM STATUS: ONLINE (NEXT.JS)
         </div>
       </header>
 
@@ -52,9 +52,9 @@ export default function FutureClass() {
           </div>
         </section>
 
-        {/* 2단 구조 */}
+        {/* 2단 메인 컨텐츠 */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-          {/* 소식 누리집 */}
+          {/* 소식 게시판 */}
           <article style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px', padding: '20px' }}>
             <h3 style={{ fontSize: '1.1rem', borderBottom: '1px solid #1e293b', paddingBottom: '10px', marginTop: 0 }}>
               📢 NEWS PORTAL
@@ -68,7 +68,7 @@ export default function FutureClass() {
             </ul>
           </article>
 
-          {/* 한 줄 방명록 */}
+          {/* 하루 글 (방명록) */}
           <article style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px', padding: '20px' }}>
             <h3 style={{ fontSize: '1.1rem', borderBottom: '1px solid #1e293b', paddingBottom: '10px', marginTop: 0 }}>
               💬 DAILY LOG
