@@ -3,37 +3,28 @@
 import React, { useState, useEffect } from 'react';
 import { Camera, User, Bell, MessageSquare, PlusCircle, Trash2 } from 'lucide-react';
 
-interface Notice {
-  id: number;
-  text: string;
-}
-
-interface DailyPost {
-  name: string;
-  text: string;
-  date: string;
-}
-
 export default function FutureClass() {
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [years, setYears] = useState<number[]>(Array.from({ length: 23 }, (_, i) => 2005 + i));
-  const [selectedYear, setSelectedYear] = useState<number>(2026);
-  const [warnings, setWarnings] = useState<{ [key: string]: number }>({});
-  const [bannedUsers, setBannedUsers] = useState<string[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [years, setYears] = useState([2024, 2025, 2026]);
+  const [selectedYear, setSelectedYear] = useState(2026);
+  const [warnings, setWarnings] = useState({});
+  const [bannedUsers, setBannedUsers] = useState([]);
   
-  const [notices, setNotices] = useState<Notice[]>([{ id: 1, text: "미래공학 학급 홈페이지가 개설되었습니다." }]);
-  const [dailyPosts, setDailyPosts] = useState<DailyPost[]>([]);
+  const [notices, setNotices] = useState([{ id: 1, text: "미래공학 학급 Next.js 홈페이지 개설!" }]);
+  const [dailyPosts, setDailyPosts] = useState([]);
   
-  const [postInput, setPostInput] = useState<string>("");
-  const [userName, setUserName] = useState<string>("");
-  const [noticeInput, setNoticeInput] = useState<string>("");
+  const [postInput, setPostInput] = useState("");
+  const [userName, setUserName] = useState("");
+  const [noticeInput, setNoticeInput] = useState("");
 
   useEffect(() => {
-    const askAdmin = confirm("관리자(선생님) 권한으로 접속하시겠습니까?\n[확인] 관리자 / [취소] 학생 모드");
-    setIsAdmin(askAdmin);
+    if (typeof window !== 'undefined') {
+      const askAdmin = window.confirm("관리자(선생님) 권한으로 접속하시겠습니까?\n[확인] 관리자 / [취소] 학생 모드");
+      setIsAdmin(askAdmin);
+    }
   }, []);
 
-  const triggerUpload = (id: string) => {
+  const triggerUpload = (id) => {
     const element = document.getElementById(id);
     if (element) element.click();
   };
@@ -61,12 +52,6 @@ export default function FutureClass() {
     setPostInput("");
   };
 
-  const addNewYear = () => {
-    const lastYear = years[years.length - 1];
-    const nextYear = prompt("새로운 년도를 입력하세요:", String(lastYear + 1));
-    if (nextYear && !isNaN(Number(nextYear))) setYears([...years, parseInt(nextYear)]);
-  };
-
   const addNotice = () => {
     if (!noticeInput.trim()) return;
     setNotices([...notices, { id: Date.now(), text: noticeInput }]);
@@ -80,7 +65,7 @@ export default function FutureClass() {
           ⚡ FUTURE ENGINEERING CLASS ⚡
         </h1>
         <div style={{ fontSize: '0.8rem', color: '#0891b2', letterSpacing: '2px' }}>
-          {isAdmin ? "SYSTEM STATUS: ADMIN ACCESS GRANTED" : "SYSTEM STATUS: STUDENT ACCESS"}
+          {isAdmin ? "SYSTEM STATUS: ADMIN ACCESS GRANTED (NEXT.JS)" : "SYSTEM STATUS: STUDENT ACCESS (NEXT.JS)"}
         </div>
       </header>
 
@@ -117,25 +102,12 @@ export default function FutureClass() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '15px' }}>
               {[1, 2, 3, 4].map(i => (
                 <div key={i} style={{ backgroundColor: '#020617', padding: '10px', borderRadius: '6px', textAlign: 'center', border: '1px solid #1e293b' }}>
-                  <div onClick={() => triggerUpload(`std-${i}`)} style={{ cursor: 'pointer', fontSize: '0.7rem', color: '#0891b2', marginBottom: '5px' }}>사진을 넣어주세요</div>
+                  <div onClick={() => triggerUpload(`std-${i}`)} style={{ cursor: 'pointer', fontSize: '0.7rem', color: '#0891b2', marginBottom: '5px' }}>사진 등록</div>
                   <input type="file" id={`std-${i}`} style={{ display: 'none' }} />
                   <input type="text" placeholder="학생 이름" style={{ width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e293b', color: '#fff', textAlign: 'center', fontSize: '0.8rem' }} />
                 </div>
               ))}
             </div>
-
-            <h4 style={{ color: '#60a5fa', fontSize: '0.9rem', marginBottom: '8px' }}>TEACHERS</h4>
-            <div style={{ backgroundColor: '#020617', padding: '10px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '10px', border: '1px solid #1e293b' }}>
-              <div onClick={() => triggerUpload('teacher')} style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#1e293b', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '0.6rem' }}>사진</div>
-              <input type="file" id="teacher" style={{ display: 'none' }} />
-              <input type="text" placeholder="선생님 성함" style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e293b', color: '#fff', fontSize: '0.8rem' }} />
-            </div>
-
-            {isAdmin && selectedYear >= 2027 && (
-              <button onClick={addNewYear} style={{ width: '100%', marginTop: '15px', padding: '8px', backgroundColor: '#155e75', border: 'none', color: '#fff', borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem' }}>
-                + 년도 직접 입력 창 추가
-              </button>
-            )}
           </article>
 
           <article style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px', padding: '20px' }}>
