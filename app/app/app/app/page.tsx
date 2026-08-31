@@ -3,19 +3,30 @@
 import React, { useState, useEffect } from 'react';
 import { Camera, User, Bell, MessageSquare, PlusCircle, Trash2 } from 'lucide-react';
 
+interface Notice {
+  id: number;
+  text: string;
+}
+
+interface DailyPost {
+  name: string;
+  text: string;
+  date: string;
+}
+
 export default function FutureClass() {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [years, setYears] = useState(Array.from({ length: 23 }, (_, i) => 2005 + i));
-  const [selectedYear, setSelectedYear] = useState(2026);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [years, setYears] = useState<number[]>(Array.from({ length: 23 }, (_, i) => 2005 + i));
+  const [selectedYear, setSelectedYear] = useState<number>(2026);
   const [warnings, setWarnings] = useState<{ [key: string]: number }>({});
   const [bannedUsers, setBannedUsers] = useState<string[]>([]);
   
-  const [notices, setNotices] = useState([{ id: 1, text: "미래공학 학급 홈페이지가 개설되었습니다." }]);
-  const [dailyPosts, setDailyPosts] = useState<{ name: string; text: string; date: string }[]>([]);
+  const [notices, setNotices] = useState<Notice[]>([{ id: 1, text: "미래공학 학급 홈페이지가 개설되었습니다." }]);
+  const [dailyPosts, setDailyPosts] = useState<DailyPost[]>([]);
   
-  const [postInput, setPostInput] = useState("");
-  const [userName, setUserName] = useState("");
-  const [noticeInput, setNoticeInput] = useState("");
+  const [postInput, setPostInput] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
+  const [noticeInput, setNoticeInput] = useState<string>("");
 
   useEffect(() => {
     const askAdmin = confirm("관리자(선생님) 권한으로 접속하시겠습니까?\n[확인] 관리자 / [취소] 학생 모드");
@@ -23,7 +34,8 @@ export default function FutureClass() {
   }, []);
 
   const triggerUpload = (id: string) => {
-    document.getElementById(id)?.click();
+    const element = document.getElementById(id);
+    if (element) element.click();
   };
 
   const submitDailyPost = () => {
@@ -73,7 +85,6 @@ export default function FutureClass() {
       </header>
 
       <main style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        {/* 메인 년도별 사진 영역 */}
         <section style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px', padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: '10px', marginBottom: '15px' }}>
             <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.2rem', margin: 0 }}>
@@ -98,9 +109,7 @@ export default function FutureClass() {
           </div>
         </section>
 
-        {/* 3단 리스트 구성 */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-          {/* 1. 학급 소개 */}
           <article style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px', padding: '20px' }}>
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.1rem', borderBottom: '1px solid #1e293b', paddingBottom: '10px', marginTop: 0 }}>
               <User size={18} /> CLASS MEMBERS
@@ -129,7 +138,6 @@ export default function FutureClass() {
             )}
           </article>
 
-          {/* 2. 소식 누리집 */}
           <article style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px', padding: '20px' }}>
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.1rem', borderBottom: '1px solid #1e293b', paddingBottom: '10px', marginTop: 0 }}>
               <Bell size={18} /> NEWS PORTAL
@@ -152,7 +160,6 @@ export default function FutureClass() {
             )}
           </article>
 
-          {/* 3. 하루 글 */}
           <article style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px', padding: '20px' }}>
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.1rem', borderBottom: '1px solid #1e293b', paddingBottom: '10px', marginTop: 0 }}>
               <MessageSquare size={18} /> DAILY LOG
